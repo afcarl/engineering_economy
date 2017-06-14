@@ -40,12 +40,19 @@ def plot_cash_flow(ax, title, data, x_range=None, xlabel='Year', ylabel='Cashflo
     ax.bar(
         x_range,
         data)
+    ax.grid(True)
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
     ax.set_title(title)
     ax.set_xticks(x_range)
     ax.get_yaxis().set_major_formatter(
         matplotlib.ticker.FuncFormatter(krw_formatter))
+    for i,j in zip(x_range,data):
+        if j > 0:
+            ax.annotate('{:.2f}'.format(j*1e-6), xy=(i-0.5, j))
+        elif j < 0:
+            ax.annotate('{:.2f}'.format(j*1e-6), xy=(i-0.5, j*1.001))
+    
 
 # 그래프 출력
 def show_cash_flow(title, data, study_period, size=(20, 5)):
@@ -107,4 +114,3 @@ def plot_item_cash_flow(car_interval, item_df, study_period, f, nrows=None, ncol
         title='부품 총합 cashflow',
         data=total_cash_flow)
 #--------------부품비 세부 그래프-----------------#
-    
